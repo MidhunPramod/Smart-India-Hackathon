@@ -1,8 +1,12 @@
-h1 {
+html
+{
+    overflow-x: hidden;
+}
+/*h1 {
     text-align: center;
 }
 
 form {
     width: 500px;
     margin: auto;
-}
+}*/

@@ -2,6 +2,14 @@ html
 {
     overflow-x: hidden;
 }
+.custom-sign
+{
+    columns: #007bff;
+}
+.custom-align
+{
+    text-align: left;
+}
 /*h1 {
     text-align: center;
 }

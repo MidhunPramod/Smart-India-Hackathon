@@ -1,23 +1,19 @@
-from flask import Flask, session, render_template, request, redirect, g
+from flask import Flask, session,render_template, request, redirect, g, send_from_directory
 import time
 from sqlalchemy.dialects.postgresql import UUID
-import pickle
-import os
 import json
 from flask_login import LoginManager, UserMixin,logout_user, login_user, current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 #create_engine('sqlite:///C:\\path\\to\\foo.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///E:\\GrievancePortal\\portal.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portal.db'
 app.config['SECRET_KEY'] = 'secret'
 
 #engine = create_engine('sqlite:///E:\\GreivancePortal\\portal.db')
-
-grievance = []
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -35,25 +31,33 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(user_id)
 
-@app.route('/login', methods = ['POST'])
+@app.route('/', methods = ["GET"])
 def index():
+    if current_user.is_authenticated:
+         return render_template("main.html")
+    else:
+         return render_template("index.html")
+
+@app.route('/login', methods = ['POST'])
+def login():
     email = request.form['email']
     password = request.form['password']
 
     user = User.query.filter_by(email = email).first()
     if check_password_hash(user.password, password):
         login_user(user)
-        return "You are now Logged In " + current_user.name
-    else:
-        return "Wrong Info, Dude"
+    
+    return redirect('/')
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()    
+    return redirect('/')
 
 @app.route('/register', methods = ['POST'])
 def register():
+    print(request.form)
     email = request.form['email']
     password = request.form['password']
     password2 = request.form['password']
@@ -70,14 +74,20 @@ def register():
     db.session.add(user)
     db.session.commit()
    
-    return "Submitted"
+    return redirect('/')
 
 
 @app.route('/submitgrievance', methods = ['POST'])
 @login_required
 def submit():
     form = request.get_json()
-    new_g = {'user':form['user'], 'type': form['type'], 'department':form['department'], 'text':form['text'], 'mood':None, 'time':time.asctime()}
+    new_g = {'user':form['user'],
+             'type': form['type'], 
+             'department':form['department'], 
+             'text':form['text'], 
+             'mood':None, 
+             }
+
     greivance.append(new_g)
     return "Your Grievance has been submitted"
 
@@ -89,5 +99,5 @@ def list():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(port = 8080)
+    app.run(port = 3000)
     

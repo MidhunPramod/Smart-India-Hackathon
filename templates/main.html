@@ -59,7 +59,7 @@
                 <div class="row">
                     <div class="form-group mt-4 col-sm-4 offset-sm-1">
                         <label for="grievance">Type of Grievance:</label>
-                        <select class="browser-default custom-select" id="grievance">
+                        <select name = "type" class="browser-default custom-select" id="grievance">
                             <option value="1" selected>Admission Related</option>
                             <option value="2">Result Related</option>
                             <option value="3">Hostel Related</option>
@@ -67,19 +67,21 @@
                     </div>
                     <div class="form-group mt-4 col-sm-4">
                         <label for="institution">Institution Name:</label>
-                        <select class="browser-default custom-select" id="institution">
+                        <select name = "department" class="browser-default custom-select" id="institution">
                             <option selected>Manipal Institute of Technology</option>
                             <option value="2">Indian Indian of Technology</option>
                             <option value="3">Birla Institute of Technology</option>
                         </select>
                     </div>
                 </div>
+
                 <div class="row mt-4">
                     <div class="form-group col-sm-8 offset-sm-1">
-                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="10"
+                        <textarea class="form-control rounded-0" name = "text" id="exampleFormControlTextarea2" rows="10"
                             placeholder="Type Your Grievance Here...."></textarea>
                     </div>
                 </div>
+
                 <div class="row mt-4 mb-5">
                     <div class="col-sm-1 offset-sm-1">
                         <button class="btn btn-primary" type="submit">Submit</button>

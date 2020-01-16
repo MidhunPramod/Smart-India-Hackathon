@@ -5,13 +5,15 @@ import json
 from flask_login import LoginManager, UserMixin,logout_user, login_user, current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__, static_url_path='')
 
 #create_engine('sqlite:///C:\\path\\to\\foo.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portal.db'
 app.config['SECRET_KEY'] = 'secret'
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'uploads/files') #'/uploads/files'
 
 #engine = create_engine('sqlite:///E:\\GreivancePortal\\portal.db')
 
@@ -25,6 +27,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(32))
     email = db.Column(db.String(32), unique = True)
     password = db.Column(db.String(32))
+
 
 
 @login_manager.user_loader
@@ -57,7 +60,9 @@ def logout():
 
 @app.route('/register', methods = ['POST'])
 def register():
-    print(request.form)
+    if current_user.is_authenticated:
+        logout_user()
+    
     email = request.form['email']
     password = request.form['password']
     password2 = request.form['password']
@@ -69,11 +74,9 @@ def register():
     user.password = generate_password_hash(password)
     user.name = name
 
-    id = 1
-
     db.session.add(user)
     db.session.commit()
-   
+
     return redirect('/')
 
 
@@ -92,10 +95,14 @@ def submit():
     return "Your Grievance has been submitted"
 
 
-@app.route('/listgrievance', methods = ['GET'])
-def list():
-   return json.dumps(grievance)
-
+@app.route('/uploadtest', methods = ['POST'])
+def upload():
+    if request.files:
+        file = request.files['file']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #return redirect(url_for('uploaded_file', filename=filename))
+        return 'okay'
 
 if __name__ == '__main__':
     app.debug = True

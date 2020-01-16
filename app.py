@@ -28,7 +28,14 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(32), unique = True)
     password = db.Column(db.String(32))
 
-
+class Grievance(db.Model):
+    g_id =db.Column(db.Integer, unique = True, primary_key = True)
+    g_type=db.Column(db.String(200),nullable=False)
+    institute=db.Column(db.String(200),nullable=False)
+    content=db.Column(db.String(2000),nullable=False)
+    feedback=db.Column(db.String(200))
+    status=db.Column(db.String(200))
+    mood=db.Column(db.String(200))
 
 @login_manager.user_loader
 def load_user(user_id):

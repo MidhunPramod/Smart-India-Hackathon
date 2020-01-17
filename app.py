@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 import os
 from uuid import uuid4
 
-from models import Institutes, GrievanceTypes
+from models import Institutes, GrievanceTypes, User, Grievance
 
 app = Flask(__name__, static_url_path='')
 
@@ -21,55 +21,13 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-def generate_uuid():
-    return str(uuid4())
-
-class User(UserMixin, db.Model):
+def search(list, key):
+    out = []
+    for i in list:
+        if key in i.subject or key in i.content or key in i.feedback:
+            out.append(i)
     
-    id = db.Column(db.String(256), unique=True, nullable=False, default = generate_uuid, primary_key = True)
-    name = db.Column(db.String(32))
-    email = db.Column(db.String(32), unique = True)
-    password = db.Column(db.String(32))
-    institute = db.Column(db.String(32))
-    access = db.Column(db.Integer, default = 0)
-    created_at = db.Column(db.DateTime, server_default = db.func.now())
-    updated_at = db.Column(db.DateTime, server_default = db.func.now(), server_onupdate = db.func.now())
-
-    def to_json(self):
-        return { 'id':self.id,'name':self.name,
-            'email':self.email,
-            'password':self.password,
-            'created_at':self.created_at,
-            'updated_at':self.updated_at}
-
-class Grievance(db.Model):
-    id = db.Column(db.String(256), unique = True, primary_key = True, default = generate_uuid)
-    
-    u_id = db.Column(db.String(200))
-    g_type = db.Column(db.String(200),nullable=False)
-    institute = db.Column(db.String(200),nullable=False)
-    subject = db.Column(db.String(200), nullable = False)
-    content = db.Column(db.String(2000),nullable=False)
-    feedback = db.Column(db.String(200))
-    status = db.Column(db.String(200))
-    mood = db.Column(db.String(200))
-
-    created_at = db.Column(db.DateTime, server_default = db.func.now())
-    updated_at = db.Column(db.DateTime, server_default = db.func.now(), server_onupdate = db.func.now())
-
-    def to_json(self):
-        return { 'id':self.id,'u_id':self.u_id,
-            'g_type':self.g_type,
-            'institute':self.institute,
-            'content':self.content,
-            'feedback':self.feedback,
-            'status':self.status,
-            'subject':self.subject,
-            'mood':self.mood,
-            'created_at_words':self.created_at.strftime('%d %B %Y'),
-            'updated_at_words':self.updated_at.strftime('%d %B %Y'),
-            'created_at':self.created_at,
-            'updated_at':self.updated_at}
+    return out
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -78,13 +36,17 @@ def load_user(user_id):
 @app.route('/', methods = ["GET"])
 def index():
     institutes = Institutes.query.all()
-    grievance_types = GrievanceTypes.query.all()
-
     institutes = [i.name for i in institutes]
-    grievance_types = [i.type for i in grievance_types]
+
     if current_user.is_authenticated:
         #grievances = Grievance.query.filter_by(u_id = current_user.id).all()
-        return render_template("main.html", institutes = institutes, grievance_types = grievance_types, grievances = status())
+        grievance_types = GrievanceTypes.query.all()
+        grievance_types = [i.type for i in grievance_types]
+        
+        if current_user.access == 1:
+            return render_template("admin.html", grievance_types = grievance_types, grievances = adminstatus())
+        else:
+            return render_template("main.html", institutes = institutes, grievance_types = grievance_types, grievances = status())
     else:
         return render_template("index.html", institutes = institutes)
 
@@ -156,6 +118,15 @@ def status():
         f.append(i.to_json())
     
     return f #jsonify(f)
+
+def adminstatus():
+    grievances = Grievance.query.filter_by(institute = current_user.institute).all()
+    f = []
+    
+    for i in grievances:
+        f.append(i.to_json())
+    
+    return f
 
 @app.route('/uploadtest', methods = ['POST'])
 def upload():

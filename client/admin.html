@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="font-awesome.min.css" />
+    <link rel="stylesheet" href="admin.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Main Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item active mr-3">
+                    <a class="nav-link" href="#">Admin<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item mr-5">
+                    <a class="nav-link" href="#">Sign Out</i></span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Side nav bar -->
+    <div class="row">
+        <div class="col-2 mt-5 ml-2">
+            <div class="nav flex-column nav-pills" id="side-navbar" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="listgrief" data-toggle="pill" href="#v-pills-home" role="tab">List
+                    Grievances</a>
+                <a class="nav-link" id="analyse" data-toggle="pill" href="#v-pills-home" role="tab">Analytics</a>
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+                    aria-controls="v-pills-messages" aria-selected="false">Reply</a>
+            </div>
+        </div>
+
+        <!-- Contents for the corresponding Side nav bar -->
+        <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <!-- Grievance form -->
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                    aria-labelledby="v-pills-home-tab">
+                    <form class="mt-5">
+                        <div class="mt-5 row">
+                            <div class="col-sm-10 offset-sm-1">
+                                <h1>Grievance List</h1>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group mt-4 col-sm-4 offset-sm-1">
+                                <label for="grievance">Type of Grievance:</label>
+                                <select class="browser-default custom-select" id="grievance">
+                                    <option value="1" selected>Admission Related</option>
+                                    <option value="2">Result Related</option>
+                                    <option value="3">Hostel Related</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card col-md-10 offset-md-1 mt-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h4 class="float-left custom-h4">Midhun
+                                            loser !(qt3.14)</h4>
+                                        <h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>
+                                            <span class="badge badge-pill badge-danger ml-5">Angry</span>
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-3 offset-sm-5">
+                                        <a href="#" class="float-right">21 March, 2014</a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 col-sm-11">
+                                    <p>
+                                        Lorem Ipsum is simply dummy text of the pr make but also the leap into
+                                        electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s with the release of Letraset sheets containing
+                                        Lorem Ipsum passages, and more recently with desktop publishing software
+                                        like Aldus PageMaker including versions of Lorem Ipsum.
+                                    </p>
+                                </div>
+
+                                <div class="row mt-3 col-sm-12">
+                                    <div class="col-sm-5"></div>
+                                    <div class="col-sm-5 offset-sm-1"></div>
+                                    <a class="btn btn-outline-primary ml-2s">
+                                        Reply</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card col-md-10 offset-md-1 mt-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h4 class="float-left custom-h4">Midhun
+                                            loser !(qt3.14)</h4>
+                                        <h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>
+                                            <span class="badge badge-pill badge-secondary ml-5">Neutral</span>
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-3 offset-sm-5">
+                                        <a href="#" class="float-right">21 March, 2014</a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 col-sm-11">
+                                    <p>Lorem Ipsum is simply dummy text of the pr make but also the leap into
+                                        electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s with the release of Letraset sheets containing
+                                        Lorem Ipsum passages, and more recently with desktop publishing software
+                                        like Aldus PageMaker including versions of Lorem Ipsum.
+                                    </p>
+                                </div>
+
+                                <div class="row mt-3 col-sm-12">
+                                    <div class="col-sm-5"></div>
+                                    <div class="col-sm-5 offset-sm-1"></div>
+                                    <a class="btn btn-outline-primary ml-2">
+                                        Reply</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card col-md-10 offset-md-1 mt-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h4 class="float-left custom-h4">Midhun
+                                            loser !(qt3.14)</h4>
+                                        <h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <h4>
+                                            <span class="badge badge-pill badge-success ml-5">Sad</span>
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-3 offset-sm-5">
+                                        <a href="#" class="float-right">21 March, 2014</a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 col-sm-11">
+                                    <p>Lorem Ipsum is simply dummy text of the pr make but also the leap into
+                                        electronic typesetting, remaining essentially unchanged. It was
+                                        popularised in the 1960s with the release of Letraset sheets containing
+                                        Lorem Ipsum passages, and more recently with desktop publishing software
+                                        like Aldus PageMaker including versions of Lorem Ipsum.
+                                    </p>
+                                </div>
+
+                                <div class="row mt-3 col-sm-12">
+                                    <div class="col-sm-5"></div>
+                                    <div class="col-sm-5 offset-sm-1"></div>
+                                    <a class="btn btn-outline-primary ml-2">
+                                        Reply</a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+
+            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                ...</div>
+            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                ...</div>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+    <script>
+        var selector = "a"
+
+        $(selector).on('click', function () {
+            $(selector).removeClass('active');
+        });
+    </script>
+</body>
+
+</html>

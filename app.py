@@ -9,6 +9,8 @@ from werkzeug.utils import secure_filename
 import os
 from uuid import uuid4
 
+from models import Institutes, GrievanceTypes
+
 app = Flask(__name__, static_url_path='')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portal.db'
@@ -44,6 +46,7 @@ class Grievance(db.Model):
     u_id = db.Column(db.String(200))
     g_type = db.Column(db.String(200),nullable=False)
     institute = db.Column(db.String(200),nullable=False)
+    subject = db.Column(db.String(200), nullable = False)
     content = db.Column(db.String(2000),nullable=False)
     feedback = db.Column(db.String(200))
     status = db.Column(db.String(200))
@@ -59,7 +62,10 @@ class Grievance(db.Model):
             'content':self.content,
             'feedback':self.feedback,
             'status':self.status,
+            'subject':self.subject,
             'mood':self.mood,
+            'created_at_words':self.created_at.strftime('%d %B %Y'),
+            'updated_at_words':self.updated_at.strftime('%d %B %Y'),
             'created_at':self.created_at,
             'updated_at':self.updated_at}
 
@@ -69,10 +75,16 @@ def load_user(user_id):
 
 @app.route('/', methods = ["GET"])
 def index():
+    institutes = Institutes.query.all()
+    grievance_types = GrievanceTypes.query.all()
+
+    institutes = [i.name for i in institutes]
+    grievance_types = [i.type for i in grievance_types]
     if current_user.is_authenticated:
-         return render_template("main.html")
+        #grievances = Grievance.query.filter_by(u_id = current_user.id).all()
+        return render_template("main.html", institutes = institutes, grievance_types = grievance_types, grievances = status())
     else:
-         return render_template("index.html")
+        return render_template("index.html", institutes = institutes)
 
 @app.route('/login', methods = ['POST'])
 def login():
@@ -120,8 +132,9 @@ def submit():
 
     new_g = Grievance()
     
-    new_g.g_type = form['type']
+    new_g.g_type = form['g_type']
     new_g.u_id = current_user.id
+    new_g.subject = form['subject']
     new_g.institute = form['institute']
     new_g.content = form['content']
 
@@ -130,8 +143,9 @@ def submit():
 
     return redirect('/')
 
-@app.route('/status', methods = ['GET'])
-@login_required
+# @app.route('/status', methods = ['GET'])
+# @login_required
+
 def status():
     grievances = Grievance.query.filter_by(u_id = current_user.id).all()
     f = []
@@ -139,7 +153,7 @@ def status():
     for i in grievances:
         f.append(i.to_json())
     
-    return jsonify(f)
+    return f #jsonify(f)
 
 @app.route('/uploadtest', methods = ['POST'])
 def upload():

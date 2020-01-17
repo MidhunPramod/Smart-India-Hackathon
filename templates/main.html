@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <!-- Main Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -34,68 +35,237 @@
             </ul>
         </div>
     </nav>
+
+    <!-- Side nav bar -->
     <div class="row ">
         <div class="col-2 mt-5 ml-2">
-          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
-              aria-controls="v-pills-home" aria-selected="true">Grievance</a>
-            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
-              aria-controls="v-pills-profile" aria-selected="false">Status</a>
-            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
-              aria-controls="v-pills-messages" aria-selected="false">Reply</a>
-            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
-              aria-controls="v-pills-settings" aria-selected="false">lamao</a>
-          </div>
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                    aria-controls="v-pills-home" aria-selected="false">Grievance</a>
+
+                <!-- Dropdown for Status -->
+                <a href="#statusmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link"
+                    role="tablist">Status</a>
+
+                
+                <ul class="collapse list-unstyled" id="statusmenu">
+                <!--
+                    <li>
+                        <a class="nav-link" id="status-option1" data-toggle="pill" href="#status-content-1"
+                            role="tab">Option 1</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" id="status-option2" data-toggle="pill" href="#status-content-2"
+                            role="tab">Option 2</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" id="status-option3" data-toggle="pill" href="#status-content-3"
+                            role="tab">Option 3</a>
+                    </li>
+                -->
+                {% for grievance in grievances: %}
+                <li>
+                    <a class="nav-link" id="status-option{{loop.index}}" data-toggle="pill" href="#status-content-{{loop.index}}"
+                        role="tab">{{grievance['subject']}}</a>
+                </li>
+                {% endfor %}
+                </ul>
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+                    aria-controls="v-pills-messages" aria-selected="false">Reply</a>
+            </div>
         </div>
+
+        <!-- Contents for the corresponding Side nav bar -->
         <div class="col-9">
-          <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"> <form class="mt-5">
-                <div class="mt-5 row">
-                    <div class="col-sm-8 offset-sm-1">
-                        <h1>Lodge Your Grievance</h1>
-                        <hr>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group mt-4 col-sm-4 offset-sm-1">
-                        <label for="grievance">Type of Grievance:</label>
-                        <select name = "type" class="browser-default custom-select" id="grievance">
-                            <option value="1" selected>Admission Related</option>
-                            <option value="2">Result Related</option>
-                            <option value="3">Hostel Related</option>
-                        </select>
-                    </div>
-                    <div class="form-group mt-4 col-sm-4">
-                        <label for="institution">Institution Name:</label>
-                        <select name = "department" class="browser-default custom-select" id="institution">
-                            <option selected>Manipal Institute of Technology</option>
-                            <option value="2">Indian Indian of Technology</option>
-                            <option value="3">Birla Institute of Technology</option>
-                        </select>
-                    </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <!-- Grievance form -->
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                    aria-labelledby="v-pills-home-tab">
+                    <form class="mt-5" action = "/submitgrievance" method = "POST">
+                        <div class="mt-5 row">
+                            <div class="col-sm-8 offset-sm-1">
+                                <h1>Lodge Your Grievance</h1>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group mt-4 col-sm-4 offset-sm-1">
+                                <label for="grievance">Type of Grievance:</label>
+                             
+                                <select class = "browser-default custom-select" id = "grievance" name = "g_type">
+                                    <options selected>Select Grievance</options>
+                                    {% for key in grievance_types: %}
+                                        <option value="{{key}}" 
+                                        {% if (loop.index == 0) %} selected="selected" {% endif %}
+                                        >
+                                        {{key}}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group mt-4 col-sm-4">
+                                <label for="institution">Institution Name:</label>
+                              
+                                <select class = "browser-default custom-select" id = "institution" name = "institute">
+                                    <options selected>Select Institute</options>
+                                    {% for key in institutes: %}
+                                        <option value="{{ key }}" 
+                                        {% if (key == "Manipal Institute of Technology") %} selected="selected" {% endif %}
+                                        >
+                                        {{key}}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                
+                              
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="form-group col-sm-8 offset-sm-1">
+                                <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="1"
+                                    placeholder="Subject of your Grievance" name = "subject"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="form-group col-sm-8 offset-sm-1">
+                                <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="10"
+                                    placeholder="Type Your Grievance Here...." name = "content"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-4 mb-5">
+                            <div class="col-sm-1 offset-sm-1">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
-                <div class="row mt-4">
-                    <div class="form-group col-sm-8 offset-sm-1">
-                        <textarea class="form-control rounded-0" name = "text" id="exampleFormControlTextarea2" rows="10"
-                            placeholder="Type Your Grievance Here...."></textarea>
+                <!-- Status  -->
+                <!--
+                <div class="tab-pane fade" id="status-content-1" role="tabpanel">
+                    <div class="col-md-9 offset-md-1 mt-5">
+                        <h3>Grievance Status</h3>
+                        <ul class="timeline">
+                            <li>
+                                <h4 class="grievhead">Grievance submitted</h4>
+                                <a href="#" class="float-right">21 March, 2014</a>
+                                <p>Your Grievance that this site doesnt have enough Teddy Bears and Penguins is Filled
+                                </p>
+                            </li>
+                            <li>
+                                <h4 class="grievhead">Grievance under review</h4>
+                                <a href="#" class="float-right">4 March, 2014</a>
+                                <p>
+                                    The "Admins" think that this site is supposed to be formal.
+                                </p>
+                            </li>
+                            <li>
+                                <h4 class="grievhead">Action Taken</h4>
+                                <a href="#" class="float-right">1 April, 2014</a>
+                                <p>
+                                    NO thanks,we dont need Penguins :)
+                                </p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-
-                <div class="row mt-4 mb-5">
-                    <div class="col-sm-1 offset-sm-1">
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                <div class="tab-pane fade" id="status-content-2" role="tabpanel" aria-labelledby="status-1-tab">
+                    <div class="col-md-9 offset-md-1 mt-5">
+                        <h3>Grievance Status</h3>
+                        <ul class="timeline">
+                            <li>
+                                <h4 class="grievhead">Grievance submitted</h4>
+                                <a href="#" class="float-right">21 March, 2014</a>
+                                <p>
+                                    Your Grievance that your team leader is God is filled.
+                                </p>
+                            </li>
+                            <li>
+                                <h4 class="grievhead">Grievance under review</h4>
+                                <a href="#" class="float-right">4 March, 2014</a>
+                                <p>
+                                    Isnt he God?
+                                </p>
+                            </li>
+                            <li>
+                                <h4 class="grievhead">Action Taken</h4>
+                                <a href="#" class="float-right">1 April, 2014</a>
+                                <p>
+                                    Yes he is God
+                                </p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </form></div>
-            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
-          </div>
+                <div class="tab-pane fade" id="status-content-3" role="tabpanel">
+                    <div class="col-md-9 offset-md-1 mt-5">
+                        <h3>Grievance Status</h3>
+                        <ul class="timeline">
+                            <li>
+                                <h4 class="grievhead">Grievance submitted</h4>
+                                <a href="#" class="float-right">21 March, 2014</a>
+                                <p>
+                                    Mujhe Manipal me nahi rehna,Library me bahut thandi hai
+                                </p>
+                            </li>
+                            <li>
+                                <h4 class="grievhead">Grievance under review</h4>
+                                <a href="#" class="float-right">4 March, 2014</a>
+                                <p>
+                                    Hmmm,wear your own jacket i guess.
+                                </p>
+                            </li>
+                            <li>
+                                <h4 class="grievhead">Action Taken</h4>
+                                <a href="#" class="float-right">1 April, 2014</a>
+                                <p>
+                                    BSDK manipal me nahi rehna tha tho padna tha ne JEE ke liye.Disgust!
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                -->
+                {% for grievance in grievances: %}
+                <div class="tab-pane fade" id="status-content-{{loop.index}}" role="tabpanel">
+                    <div class="col-md-9 offset-md-1 mt-5">
+                        <h3>Grievance Status</h3>
+                        <ul class="timeline">
+                            <li>
+                                <h4 class="grievhead">Grievance submitted</h4>
+                                <a href="#" class="float-right">{{grievance['created_at_words']}}</a>
+                                <p>
+                                   {{grievance['subject']}}
+                                </p>
+                            </li>
+                            
+                            <li>
+                                <h4 class="grievhead">Grievance under review</h4>
+                                <a href="#" class="float-right">{{grievance['updated_at_words']}}</a>
+                                <p>
+                                    {{grievance['content']}}
+                                </p>
+                            </li>
+                            
+                            {% if grievance['status'] == 'action_taken': %}
+                            <li>
+                                <h4 class="grievhead">Action Taken</h4>
+                                <a href="#" class="float-right">1 April, 2014</a>
+                                <p>
+                                    {{grievance['feedback']}}
+                                </p>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    ...</div>
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    ...</div>
+            </div>
         </div>
-      </div>
-    <div class="container">
-       
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -106,6 +276,13 @@
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+    <script>
+        var selector = "a"
+
+        $(selector).on('click', function () {
+            $(selector).removeClass('active');
+        });
     </script>
 </body>
 

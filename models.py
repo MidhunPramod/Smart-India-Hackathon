@@ -1,9 +1,16 @@
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 
-class User(db.Model):
+app = Flask(__name__, static_url_path='')
 
-	def set_password(self, password):
-		self.password_hash = generate_password_hash(password)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portal.db'
+app.config['SECRET_KEY'] = 'secret'
 
-	def check_password(self, password):
-		return check_password_hash(self.password_hash, password)
+db = SQLAlchemy(app)
+
+class Institutes(db.Model):
+	name = db.Column(db.String(32), unique = True, primary_key = True)
+
+class GrievanceTypes(db.Model):
+	type = db.Column(db.String(32), unique = True, primary_key = True)
+

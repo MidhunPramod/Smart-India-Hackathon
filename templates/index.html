@@ -106,13 +106,20 @@
   
 
   <select class="browser-default custom-select" name = "institution" id="institution" placeholder="Institution">
-      <option >Manipal Institute of Technology</option>
+      <!--<option >Manipal Institute of Technology</option>
       <option value="2">Indian Indian of Technology</option>
-      <option value="3">Birla Institute of Technology</option>
+      <option value="3">Birla Institute of Technology</option> -->
+      {% for key in institutes: %}
+        <option value="{{key}}" 
+          {% if (loop.index == 0) %} selected="selected" {% endif %}
+          >
+          {{key}}
+          </option>
+      {% endfor %}
   </select>
 
   <!-- Sign up button -->
-  <button class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
+  <button class="btn btn-info my-4 btn-block" type="submit">Sign Up</button>
 
   <!-- Social register -->
   

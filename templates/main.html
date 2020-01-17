@@ -235,22 +235,24 @@
                                 <h4 class="grievhead">Grievance submitted</h4>
                                 <a href="#" class="float-right">{{grievance['created_at_words']}}</a>
                                 <p>
-                                   {{grievance['subject']}}
+                                   Your grievance regarding: "{{grievance['subject']}}" has been submitted.
                                 </p>
                             </li>
                             
+                            {% if grievance['status'] == 'under_review': %}
                             <li>
                                 <h4 class="grievhead">Grievance under review</h4>
                                 <a href="#" class="float-right">{{grievance['updated_at_words']}}</a>
                                 <p>
-                                    {{grievance['content']}}
+                                    Your grievance is under review.
                                 </p>
                             </li>
+                            {% endif %}
                             
                             {% if grievance['status'] == 'action_taken': %}
                             <li>
                                 <h4 class="grievhead">Action Taken</h4>
-                                <a href="#" class="float-right">1 April, 2014</a>
+                                <a href="#" class="float-right">{{grievance['updated_at_words']}}</a>
                                 <p>
                                     {{grievance['feedback']}}
                                 </p>

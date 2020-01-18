@@ -119,9 +119,10 @@ def submit():
     new_g.subject = form['subject']
     new_g.institute = current_user.institute
     new_g.content = form['content']
-
+    f = new_g.id
     db.session.add(new_g)
     db.session.commit()
+    model_run(f)
 
     return redirect('/')
 
@@ -177,15 +178,15 @@ def close_grievance():
     db.session.commit()
     return redirect('/')
 
-@app.route('/modelrun', methods = ['POST'])
-def run_model():
-    form = request.form
-    content = form['content']
-    print("The content is:", content)
+#@app.route('/modelrun', methods = ['POST'])
+def run_model(id):
     tb._SYMBOLIC_SCOPE.value = True
-    f = predict_sentiment.prediction(" I am highly disappointed in this institutuion, the faculty are inexperienced, they do not know how to teach. The exams were conducted in a haphazard manner")
-    print(f)
-    return f
+    f = predict_sentiment.prediction(content)
+
+    g = db.session.query(Grievance).get(id)
+    f = predict_sentiment.prediction(g.content)
+    g.mood = f
+    db.session.commit()
 
 if __name__ == '__main__':
     app.debug = True

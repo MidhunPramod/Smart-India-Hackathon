@@ -42,14 +42,15 @@ class User(UserMixin, db.Model):
 class Grievance(db.Model):
     id = db.Column(db.String(256), unique = True, primary_key = True, default = generate_uuid)
     
-    u_id = db.Column(db.String(200))
-    g_type = db.Column(db.String(200),nullable=False)
-    institute = db.Column(db.String(200),nullable=False)
-    subject = db.Column(db.String(200), nullable = False)
-    content = db.Column(db.String(2000),nullable=False)
-    feedback = db.Column(db.String(200))
-    status = db.Column(db.String(200))
-    mood = db.Column(db.String(200))
+    u_id = db.Column(db.String(256))
+    g_type = db.Column(db.String(256),nullable=False)
+    institute = db.Column(db.String(256),nullable=False)
+    subject = db.Column(db.String(256), nullable = False)
+    content = db.Column(db.String(2048),nullable=False)
+    feedback = db.Column(db.String(256))
+    status = db.Column(db.String(256))
+    mood = db.Column(db.String(256))
+    #tags = db.Column(db.String(256))
 
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, server_default = db.func.now(), server_onupdate = db.func.now())

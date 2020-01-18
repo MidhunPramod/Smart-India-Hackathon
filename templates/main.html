@@ -210,12 +210,12 @@
                                 </p>
                             </li>
                             
-                            {% if grievance['status'] == 'under_review': %}
+                            {% if grievance['status'] in ['under_review','action_taken']: %}
                             <li>
                                 <h4 class="grievhead">Grievance under review</h4>
                                 <a href="#" class="float-right">{{grievance['updated_at_words']}}</a>
                                 <p>
-                                    Your grievance is under review.
+                                    {{grievance['content']}}
                                 </p>
                             </li>
                             {% endif %}

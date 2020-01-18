@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 import os
 from uuid import uuid4
 
-import predict_sentiment
+#import predict_sentiment
 
 from models import Institutes, GrievanceTypes, User, Grievance
 
@@ -26,8 +26,8 @@ login_manager.init_app(app)
 @app.route('/search', methods = ['POST'])
 def search():
     form = request.form
-    key = form.key
-    
+    key = form['key']
+    print("The search key is:", key)
     grievances = Grievance.query.filter_by(institute = current_user.institute).all()
     f = []
     
@@ -35,10 +35,12 @@ def search():
         f.append(i.to_json())
 
     out = []
+    print(f)
     for i in f:
-        if key in i.subject or key in i.content or key in i.feedback:
+        if (i['subject'] and key in i['subject']) or (i['content'] and key in i['content']) or (i['feedback'] and key in i['feedback']):
             out.append(i)
-    
+    for i, j in enumerate(out):
+        print(i, j)
     return index(grievances = out)
 
 @login_manager.user_loader
@@ -55,9 +57,11 @@ def index(grievances = None):
         grievance_types = [i.type for i in grievance_types]
         
         if current_user.access == 1:
-            return render_template("admin.html", grievance_types = grievance_types, grievances = adminstatus())
+            if grievances == None:
+                grievances = adminstatus()
+            return render_template("admin.html", grievance_types = grievance_types, grievances = grievances)
         else:
-            return render_template("main.html", institutes = institutes, grievance_types = grievance_types, grievances = status())
+            return render_template("main.html", institutes = institutes, grievance_types = grievance_types, grievances = grievances)
     else:
         return render_template("index.html", institutes = institutes)
 
@@ -110,7 +114,7 @@ def submit():
     new_g.g_type = form['g_type']
     new_g.u_id = current_user.id
     new_g.subject = form['subject']
-    new_g.institute = form['institute']
+    new_g.institute = current_user.institute
     new_g.content = form['content']
 
     db.session.add(new_g)
@@ -128,7 +132,7 @@ def status():
     for i in grievances:
         f.append(i.to_json())
     
-    return f #jsonify(f)
+    return f
 
 def adminstatus():
     grievances = Grievance.query.filter_by(institute = current_user.institute).all()
@@ -160,6 +164,15 @@ def submitfeedback():
         g.status = 'under_review'
         db.session.commit()
         return redirect('/')
+
+@app.route('/closegrievance', methods = ['POST'])
+def close_grievance():
+    form = request.form
+    id = form['id']
+    g = db.session.query(Grievance).get(id)
+    g.status = 'action_taken'
+    db.session.commit()
+    return redirect('/')
 
 @app.route('/modelrun', methods = ['POST'])
 def run_model():

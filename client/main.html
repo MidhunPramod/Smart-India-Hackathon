@@ -11,7 +11,8 @@
     <title>Document</title>
 </head>
 
-<body>
+<body style="background-image: url('design12.png'); background-size: cover;">
+
     <!-- Main Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#"></a>
@@ -92,6 +93,19 @@
                                     placeholder="Subject of your Grievance"></textarea>
                             </div>
                         </div>
+                        <!-- <div class="row mt-4">
+                            <div class="col-sm-4 form-inline offset-sm-1">
+                                <input class="form-control" type="search" placeholder="Add" id="addtext">
+                                <a class="btn btn-secondary ml-2" style="background-color: blue; color: white;"
+                                    type="submit" id="add">Add Tag</a>
+                            </div>
+                            <div class="col-sm-4" id="addtags">
+
+                            </div>
+
+                        </div> -->
+
+
                         <div class="row mt-4">
                             <div class="form-group col-sm-8 offset-sm-1">
                                 <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="10"
@@ -213,8 +227,33 @@
             $(selector).removeClass('active');
         });
 
-        $("form").on('submit', function () {
-            alert("Grievance Submitted Successfully")
+        // $("form").on('submit', function () {
+        //     alert("Grievance Submitted Successfully")
+        // })
+
+        $('#add').click(function () {
+            var value = $('#addtext').val();
+            input = jQuery(
+                ` <span class = "badge badge-pill badge-secondary ml-5 p-1" > ` + value + `</span>`
+            );
+            // input = jQuery(
+            //     ` <span style=
+            //     'border:2px solid #4484ce;
+            //     border-radius: 2rem; 
+            //     padding-top:5px;
+            //     padding-bottom:5px;
+            //     padding-left: 20px;
+            //     padding-right:20px; 
+            //     font-weight:bold;
+            //     color: #4484ce; 
+            //     background-color: transparent; '
+            //      class='ml-2'> ` +
+            //     value + `</span>`
+            // );
+            // input = jQuery(
+            //     `<span style=color:blue>` + value + `</span>`
+            // )
+            jQuery('#addtags').append(input);
         })
     </script>
 </body>

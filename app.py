@@ -6,6 +6,7 @@ from flask import Flask, session,render_template, request, redirect, g, send_fro
 import time
 from sqlalchemy.dialects.postgresql import UUID
 import json
+from sqlalchemy import desc
 from flask_login import LoginManager, UserMixin,logout_user, login_user, current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -64,6 +65,8 @@ def index(grievances = None):
                 grievances = adminstatus()
             return render_template("admin.html", grievance_types = grievance_types, grievances = grievances)
         else:
+            if grievances == None:
+                grievances = status()
             return render_template("main.html", institutes = institutes, grievance_types = grievance_types, grievances = grievances)
     else:
         return render_template("index.html", institutes = institutes)
@@ -119,10 +122,9 @@ def submit():
     new_g.subject = form['subject']
     new_g.institute = current_user.institute
     new_g.content = form['content']
-    f = new_g.id
     db.session.add(new_g)
     db.session.commit()
-    model_run(f)
+    run_model()
 
     return redirect('/')
 
@@ -179,11 +181,11 @@ def close_grievance():
     return redirect('/')
 
 #@app.route('/modelrun', methods = ['POST'])
-def run_model(id):
+def run_model():
     tb._SYMBOLIC_SCOPE.value = True
-    f = predict_sentiment.prediction(content)
+    #f = predict_sentiment.prediction(content)
 
-    g = db.session.query(Grievance).get(id)
+    g = db.session.query(Grievance).order_by(desc(Grievance.created_at)).first()
     f = predict_sentiment.prediction(g.content)
     g.mood = f
     db.session.commit()

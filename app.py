@@ -12,7 +12,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
 from uuid import uuid4
-import hello
+#import hello
+import graph1
+import graph2
+import graph3
 
 from models import Institutes, GrievanceTypes, User, Grievance
 
@@ -30,6 +33,19 @@ login_manager.init_app(app)
 def analytic():
     return render_template('admin.html', script = hello.script, div1 = hello.div1, div2 = hello.div2, div3 = hello.div3)
 
+
+@app.route('/applyfilter', methods = ['POST'])
+def apply_filter():
+    form = request.form
+    gtype = form['type']
+    grievances = Grievance.query.filter_by(g_type = gtype).all()
+    f = []
+
+    for i in grievances:
+        f.append(i.to_json())
+    
+    return index(grievances = f)
+
 @app.route('/search', methods = ['POST'])
 def search():
     form = request.form
@@ -44,7 +60,7 @@ def search():
     out = []
     print(f)
     for i in f:
-        if (i['subject'] and key in i['subject']) or (i['content'] and key in i['content']) or (i['feedback'] and key in i['feedback']):
+        if (i['subject'] and key in i['subject'].lower()) or (i['content'] and key in i['content'].lower()) or (i['feedback'] and key in i['feedback'].lower()):
             out.append(i)
     for i, j in enumerate(out):
         print(i, j)
@@ -64,10 +80,15 @@ def index(grievances = None):
         grievance_types = [i.type for i in grievance_types]
         
         if current_user.access == 1:
+            graph1.makegraph(current_user.institute)
+            graph2.makegraph(current_user.institute)
+            graph3.makegraph(current_user.institute)
             if grievances == None:
                 grievances = adminstatus()
             return render_template("admin.html", grievance_types = grievance_types, grievances = grievances)
         else:
+            if grievances == None:
+                grievances = status()
             return render_template("main.html", institutes = institutes, grievance_types = grievance_types, grievances = grievances)
     else:
         return render_template("index.html", institutes = institutes)
@@ -176,11 +197,12 @@ def submitfeedback():
 @app.route('/closegrievance', methods = ['POST'])
 def close_grievance():
     form = request.form
-    id = form['id']
-    g = db.session.query(Grievance).get(id)
-    g.status = 'action_taken'
-    db.session.commit()
-    return redirect('/')
+    if form:
+        id = form['id']
+        g = db.session.query(Grievance).get(id)
+        g.status = 'action_taken'
+        db.session.commit()
+        return redirect('/')
 
 #@app.route('/modelrun', methods = ['POST'])
 def run_model(id):

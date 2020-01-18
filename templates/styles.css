@@ -8,3 +8,8 @@
     
     text-align: center;
 }
+body {
+    background-image: url('design10.png');
+    background-repeat: no-repeat;
+    background-size: 60%;
+} 

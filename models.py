@@ -64,7 +64,7 @@ class Grievance(db.Model):
             'status':self.status,
             'subject':self.subject,
             'mood':self.mood,
-            'created_at_words':self.created_at.strftime('%d %B %Y'),
-            'updated_at_words':self.updated_at.strftime('%d %B %Y'),
+            'created_at_words':self.created_at.strftime('%H:%M, %d %B %Y'),
+            'updated_at_words':self.updated_at.strftime('%H:%M, %d %B %Y'),
             'created_at':self.created_at,
             'updated_at':self.updated_at}

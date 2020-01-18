@@ -115,7 +115,7 @@
             </small>
 
 
-            <select class="browser-default custom-select" id="institution1" placeholder="Institution">
+            <select class="browser-default custom-select" id="institution1">
               <option>Manipal Institute of Technology</option>
               <option value="2">Indian Indian of Technology</option>
               <option value="3">Birla Institute of Technology</option>
@@ -135,7 +135,7 @@
       </div>
     </div>
   </div>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar sticky-top navbar-expand-lg bg-light">
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,29 +144,26 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
+        <li class="nav-item pr-2 ">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">How to Apply</a>
+
+
+        <li class="nav-item pr-2">
+          <a class="nav-link" href="#kcool">How it Works?</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">How it Works?</a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item pr-2">
           <a class="nav-link" href="#">Contact</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link  " data-toggle="modal" data-target="#login" href="#">Login</a>
+        <li class="nav-item ">
+          <a class="btn btn-primary" data-toggle="modal" data-target="#login" href="#">Login</a>
         </li>
       </ul>
 
     </div>
   </nav>
-  <div class="jumbotron jumbotron-custom">
+
+  <div class="jumbotron jumbotron-custom" id="lolol">
     <h1 class="display-4">Hello, world!</h1>
     <p class="lead">We're making a grievance portal! </p>
     <hr class="my-4">
@@ -181,6 +178,28 @@
     <hr class="my-4">
     <p>We're the Big Hero 6.</p>
   </div>
+  <div class="jumbotron jumbotron-custom">
+    <h1 class="display-4">Hello, world!</h1>
+    <p class="lead">We're making a grievance portal! </p>
+    <hr class="my-4">
+    <p>We're the Big Hero 6.</p>
+
+  </div>
+  <div class="jumbotron jumbotron-custom" id="kcool">
+    <h1 class="display-4">How to Apply</h1>
+    <p class="lead">Create an account
+      Verify OTP
+      Submit Grievance </p>
+    <hr class="my-4">
+    <p>We're the Big Hero 6.</p>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+      </div>
+    </div>
+  </footer>
   <script>
     $('#hidelogin').click(function () {
       $('#login').modal().hide();

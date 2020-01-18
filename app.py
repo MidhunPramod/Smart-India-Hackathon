@@ -1,3 +1,7 @@
+import predict_sentiment
+import keras.backend.tensorflow_backend as tb
+print("Predict Sentiment Imported")
+
 from flask import Flask, session,render_template, request, redirect, g, send_from_directory, jsonify
 import time
 from sqlalchemy.dialects.postgresql import UUID
@@ -9,7 +13,6 @@ from werkzeug.utils import secure_filename
 import os
 from uuid import uuid4
 
-#import predict_sentiment
 
 from models import Institutes, GrievanceTypes, User, Grievance
 
@@ -177,12 +180,15 @@ def close_grievance():
 @app.route('/modelrun', methods = ['POST'])
 def run_model():
     form = request.form
-    content = form
-    
-    f = predict_sentiment.prediction(content)
+    content = form['content']
+    print("The content is:", content)
+    tb._SYMBOLIC_SCOPE.value = True
+    f = predict_sentiment.prediction(" I am highly disappointed in this institutuion, the faculty are inexperienced, they do not know how to teach. The exams were conducted in a haphazard manner")
+    print(f)
     return f
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(port = 3000)
+    tb._SYMBOLIC_SCOPE.value = True
+    app.run(port = 3000,threaded = False)
     

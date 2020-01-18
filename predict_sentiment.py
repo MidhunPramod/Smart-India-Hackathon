@@ -8,7 +8,6 @@ import keras
 from keras.models import load_model
 model = load_model('final_model.h5')
 
-
 # In[11]:
 
 
@@ -105,7 +104,7 @@ text = "Most of the New Jedi Order books focus on the Solo kids, to the extent t
 
 
 # text = preprocess(text)
-"It's rare that I completely abandon a book these days. And when I do, it almost always happens on page fifty, once I've had more than enough of whatever piece of the structure I can't take any more. That didn't happen with Hades' Daughter, in part because when I reached page fifty I was locked out of the house and had no other reading material. In any case, over the past nine months, I have struggled my way through one hundred eighty-eight pages of this monstrosity, or about a third of the first book in a series, before the prose got the best of me. I can't really quote you a passage to show you why, because there aren't many passages that don't involve the kinds of subjects that would get a review censored in the places one normally posts a review. Which, honestly, usually means that book is right up my alley; have can you go wrong with almost six hundred pages of sex, violence, and combinations of the two? In short, by writing a Harlequin romance that's too violent (and long) for Harlequin to publish. The premise is interesting, but the execution leaves a great deal to be desired. I'd like to see a really, really good romance author take this on (Marjorie Liu would be a fine choice, I think), but as it stands, it's just plain silly. (zero)"
+# "It's rare that I completely abandon a book these days. And when I do, it almost always happens on page fifty, once I've had more than enough of whatever piece of the structure I can't take any more. That didn't happen with Hades' Daughter, in part because when I reached page fifty I was locked out of the house and had no other reading material. In any case, over the past nine months, I have struggled my way through one hundred eighty-eight pages of this monstrosity, or about a third of the first book in a series, before the prose got the best of me. I can't really quote you a passage to show you why, because there aren't many passages that don't involve the kinds of subjects that would get a review censored in the places one normally posts a review. Which, honestly, usually means that book is right up my alley; have can you go wrong with almost six hundred pages of sex, violence, and combinations of the two? In short, by writing a Harlequin romance that's too violent (and long) for Harlequin to publish. The premise is interesting, but the execution leaves a great deal to be desired. I'd like to see a really, really good romance author take this on (Marjorie Liu would be a fine choice, I think), but as it stands, it's just plain silly. (zero)"
 
 
 # In[26]:

@@ -59,7 +59,7 @@
                             role="tab">Option 3</a>
                     </li>
                 </ul>
-               
+
             </div>
         </div>
 
@@ -192,7 +192,7 @@
                         </ul>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
@@ -212,6 +212,10 @@
         $(selector).on('click', function () {
             $(selector).removeClass('active');
         });
+
+        $("form").on('submit', function () {
+            alert("Grievance Submitted Successfully")
+        })
     </script>
 </body>
 

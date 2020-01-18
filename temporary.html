@@ -15,7 +15,7 @@
 <body>
     <!-- Main Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"></a>
+        <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -39,10 +39,12 @@
     <!-- Side nav bar -->
     <div class="row">
         <div class="col-2 mt-5 ml-2">
-            <div class="nav flex-column nav-pills active" id="side-navbar" role="tablist" aria-orientation="vertical">
+            <div class="nav flex-column nav-pills" id="side-navbar" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="listgrief" data-toggle="pill" href="#v-pills-home" role="tab">List
                     Grievances</a>
                 <a class="nav-link" id="analyse" data-toggle="pill" href="#v-pills-home" role="tab">Analytics</a>
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+                    aria-controls="v-pills-messages" aria-selected="false">Reply</a>
             </div>
         </div>
 
@@ -52,63 +54,64 @@
                 <!-- Grievance form -->
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                     aria-labelledby="v-pills-home-tab">
-                    <form class="mt-5">
-                        <!--<form  class = "mt-5" method = 'POST' action = '/search'> -->
+                    <form class="mt-5" action = "/search" method = "POST">
                         <div class="mt-5 row">
-                            
+                            <!--
+                            <div class="col-sm-10 offset-sm-1">
+                                <h1>Grievance List</h1>
+                                <hr>
+                            </div> -->
                             <div class="col-sm-3 offset-sm-1">
                                 <h1>Grievance List</h1>
                             </div>
                             <div class="col-sm-7 form-inline">
-                                <div class="col-sm-1 ml-4"></div>
-                               
                                 <input class="form-control mr-sm-2 offset-sm-5" type="search" placeholder="Search"
-                                    aria-label="Search">
-                                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-                                
+                                    aria-label="Search" name = "key">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                             </div>
-                       
                         </div>
-                        </form>
                         
                         <div class="row">
                             <div class="col-sm-10 offset-sm-1">
                                 <hr>
                             </div>
                         </div>
-
-                        <form action = "/applyfilter" method = "POST" >
+                        </div>
                         <div class="row">
-                            
-                            <div class="form-group mt-4 col-sm-5 offset-sm-1">
+                            <div class="form-group mt-4 col-sm-4 offset-sm-1">
                                 <label for="grievance">Type of Grievance:</label>
-                                <select class="browser-default custom-select" id="grievance">
+                                <select class = "browser-default custom-select" id = "grievance">
                                     {% for grievance in grievance_types: %}
-                                    <option value = {{grievance}} {% if loop.index == 0: %} selected {% endif %} >{{grievance}}</option>
-                                    {% endfor %} 
+                                        <option value = {{ grievance }} >
+                                            {{ grievance }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-sm-2 mt-5">
-                                <button class="btn btn-outline-primary mt-2" type="submit">Apply Filter</button>
-                            </div>
-                            </form>
-                        </div> 
+                        </div>
+                        <div class="col-sm-2 mt-5">
+                            <button class="btn btn-outline-primary mt-2" type="submit">Apply Filter</button>
+                        </div>
+                    </div>
+                    </form>
+
                         {% for grievance in grievances: %}
-                        <div class="card col-md-10 offset-md-1 mt-4">
-                            
-                            <div class="card-body">
+                        <form action = '/submitfeedback' method = "POST">
+                            <input type = "hidden" value = {{ grievance['id'] }} name = "id" />
+                            <div class="card col-md-10 offset-md-1 mt-4">
+                                <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h4 class="float-left custom-h4">{{grievance['subject']}}</h4>
+                                        <h4 class="float-left custom-h4"> {{grievance['subject']}} </h4>
                                         <h4>
                                     </div>
                                     <div class="col-sm-1">
                                         <h4>
-                                            <span class="badge badge-pill badge-danger ml-5">{{grievance['mood'] or 'processing'}}</span>
+                                            <span class="badge badge-pill badge-success ml-5"> {{ grievance['mood'] }} </span>
                                         </h4>
                                     </div>
                                     <div class="col-sm-3 offset-sm-5">
-                                        <a href="#" class="float-right">{{grievance['created_at_words']}}</a>
+                                        <a href="#" class="float-right"> {{ grievance['created_at_words'] }} </a>
                                     </div>
                                 </div>
                                 <div class="row mt-3 col-sm-11">
@@ -116,33 +119,29 @@
                                         {{grievance['content']}}
                                     </p>
                                 </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-sm-9">
-                                        <input class="form-control" placeholder="Add a Comment...">
-                                    </div>
-                                    <div class="col-sm-1 ml-4">
-                                        <button class="btn btn-outline-primary" type="submit">Reply</button>
-                                    </div>
-                                    <div class="col-sm-1 ml-4">
-                                        <button class="btn btn-outline-danger" type="submit">Close</button>
-                                    </div>
+                                
+                                <div class="col-sm-10">
+                                    <input class="form-control" name = "feedback" placeholder="Add a Comment...">
                                 </div>
                                 
+                                <div class="row mt-3 col-sm-12">
+                                    <div class="col-sm-5"></div>
+                                    <div class="col-sm-5 offset-sm-1"></div>
+                                    <button typ = "submit" class="btn btn-outline-primary ml-2">
+                                        Reply</button>
+                                </div>
+                        </form>
                             </div>
-                            
                         </div>
                         {% endfor %}
                 </div>
             </div>
-            </form>
-        </div>
 
-        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-            ...</div>
-        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-            ...</div>
-    </div>
+            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                ...</div>
+            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                ...</div>
+        </div>
     </div>
     </div>
 

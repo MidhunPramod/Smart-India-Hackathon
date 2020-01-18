@@ -83,8 +83,14 @@
                             <div class="form-group mt-4 col-sm-5 offset-sm-1">
                                 <label for="grievance">Type of Grievance:</label>
                                 <select class="browser-default custom-select" id="grievance">
+                                    <!--
+                                    <option value="1" selected>Admission Related</option>
+                                    <option value="2">Result Related</option>
+                                    <option value="3">Hostel Related</option>
+                                    -->
+                                    
                                     {% for grievance in grievance_types: %}
-                                    <option value = {{grievance}} {% if loop.index == 0: %} selected {% endif %} >{{grievance}}</option>
+                                    <option value = {{ grievance['type'] }} {% if loop.index == 0: %} selected {% endif %} >{{ grievance['type'] }}</option>
                                     {% endfor %} 
                                 </select>
                             </div>
@@ -93,9 +99,9 @@
                             </div>
                             </form>
                         </div> 
-                        {% for grievance in grievances: %}
+
                         <div class="card col-md-10 offset-md-1 mt-4">
-                            
+                            {% for grievance in grievances: %}
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -104,7 +110,7 @@
                                     </div>
                                     <div class="col-sm-1">
                                         <h4>
-                                            <span class="badge badge-pill badge-danger ml-5">{{grievance['mood'] or 'processing'}}</span>
+                                            <span class="badge badge-pill badge-danger ml-5">Angry</span>
                                         </h4>
                                     </div>
                                     <div class="col-sm-3 offset-sm-5">
@@ -128,11 +134,10 @@
                                         <button class="btn btn-outline-danger" type="submit">Close</button>
                                     </div>
                                 </div>
-                                
+                                    
                             </div>
-                            
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                 </div>
             </div>
             </form>

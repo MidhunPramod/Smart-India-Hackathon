@@ -49,20 +49,7 @@
 
                 
                 <ul class="collapse list-unstyled" id="statusmenu">
-                <!--
-                    <li>
-                        <a class="nav-link" id="status-option1" data-toggle="pill" href="#status-content-1"
-                            role="tab">Option 1</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" id="status-option2" data-toggle="pill" href="#status-content-2"
-                            role="tab">Option 2</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" id="status-option3" data-toggle="pill" href="#status-content-3"
-                            role="tab">Option 3</a>
-                    </li>
-                -->
+               
                 {% for grievance in grievances: %}
                 <li>
                     <a class="nav-link" id="status-option{{loop.index}}" data-toggle="pill" href="#status-content-{{loop.index}}"
@@ -70,8 +57,7 @@
                 </li>
                 {% endfor %}
                 </ul>
-                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
-                    aria-controls="v-pills-messages" aria-selected="false">Reply</a>
+               
             </div>
         </div>
 
@@ -103,22 +89,7 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="form-group mt-4 col-sm-4">
-                                <label for="institution">Institution Name:</label>
-                              
-                                <select class = "browser-default custom-select" id = "institution" name = "institute">
-                                    <options selected>Select Institute</options>
-                                    {% for key in institutes: %}
-                                        <option value="{{ key }}" 
-                                        {% if (key == "Manipal Institute of Technology") %} selected="selected" {% endif %}
-                                        >
-                                        {{key}}
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                                
-                              
-                            </div>
+                            
                         </div>
                         <div class="row mt-4">
                             <div class="form-group col-sm-8 offset-sm-1">

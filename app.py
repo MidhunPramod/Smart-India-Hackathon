@@ -9,6 +9,8 @@ from werkzeug.utils import secure_filename
 import os
 from uuid import uuid4
 
+import predict_sentiment
+
 from models import Institutes, GrievanceTypes, User, Grievance
 
 app = Flask(__name__, static_url_path='')
@@ -21,25 +23,34 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-def search(list, key):
+@app.route('/search', methods = ['POST'])
+def search():
+    form = request.form
+    key = form.key
+    
+    grievances = Grievance.query.filter_by(institute = current_user.institute).all()
+    f = []
+    
+    for i in grievances:
+        f.append(i.to_json())
+
     out = []
-    for i in list:
+    for i in f:
         if key in i.subject or key in i.content or key in i.feedback:
             out.append(i)
     
-    return out
+    return index(grievances = out)
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
 
 @app.route('/', methods = ["GET"])
-def index():
+def index(grievances = None):
     institutes = Institutes.query.all()
     institutes = [i.name for i in institutes]
 
     if current_user.is_authenticated:
-        #grievances = Grievance.query.filter_by(u_id = current_user.id).all()
         grievance_types = GrievanceTypes.query.all()
         grievance_types = [i.type for i in grievance_types]
         
@@ -136,6 +147,27 @@ def upload():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #return redirect(url_for('uploaded_file', filename=filename))
         return 'okay'
+
+@app.route('/submitfeedback', methods = ['POST'])
+def submitfeedback():
+    form = request.form
+
+    if form:
+        feedback = form['feedback']
+        id = form['id']
+        g = db.session.query(Grievance).get(id)
+        g.feedback = feedback
+        g.status = 'under_review'
+        db.session.commit()
+        return redirect('/')
+
+@app.route('/modelrun', methods = ['POST'])
+def run_model():
+    form = request.form
+    content = form
+    
+    f = predict_sentiment.prediction(content)
+    return f
 
 if __name__ == '__main__':
     app.debug = True

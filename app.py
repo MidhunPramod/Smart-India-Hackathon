@@ -12,7 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
 from uuid import uuid4
-
+import hello
 
 from models import Institutes, GrievanceTypes, User, Grievance
 
@@ -25,6 +25,10 @@ app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.realpath(__fi
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+@app.route('/analytics', methods = ['GET'])
+def analytic():
+    return render_template('admin.html', script = hello.script, div1 = hello.div1, div2 = hello.div2, div3 = hello.div3)
 
 @app.route('/search', methods = ['POST'])
 def search():

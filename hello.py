@@ -89,7 +89,6 @@ p3.add_tools(HoverTool(tooltips=tooltips3))
 show(column(p1,p2,p3))
 
 f = column(p1,p2,p3)
-g = get_layout_html(f)
 
-#render_template('templates/admin.html', snippet = g)
-script = server_document("https://demo.bokeh.org/sliders")
+script, divs = components((p1, p2, p3))
+div1, div2, div3 = divs

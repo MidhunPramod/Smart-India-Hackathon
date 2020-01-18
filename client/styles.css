@@ -1,82 +1,145 @@
 .navbar-custom {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
 }
 
 .jumbotron-custom {
 
-    text-align: center;
+  text-align: center;
 }
 
 @import url(https://fonts.googleapis.com/css?family=Alegreya+Sans:300);
 /* @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Raleway:400,600,700&display=swap'); */
 
 body {
-    font-family: 'Alegreya', sans-serif;
+  font-family: 'Alegreya', sans-serif;
 }
 
 /* Sticky footer position and size
 -------------------------------------------------- */
 html {
-    position: relative;
-    min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-    /* Margin bottom by footer height */
-    margin-bottom: 300px;
+  /* Margin bottom by footer height */
+  margin-bottom: 300px;
 }
 
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 300px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 300px;
 }
 
 /* Taller footer on small screens */
 @media (max-width: 34em) {
-    body {
-        margin-bottom: 500px;
-    }
+  body {
+    margin-bottom: 500px;
+  }
 
-    .footer {
-        height: 500px;
-    }
+  .footer {
+    height: 500px;
+  }
 }
 
 /* Sticky footer style and color
 -------------------------------------------------- */
 footer {
-    padding-top: 30px;
-    background-color: #292c2f;
-    color: #bbb;
+  padding-top: 30px;
+  background-color: #292c2f;
+  color: #bbb;
 }
 
 footer a {
-    color: #999;
-    text-decoration: none;
+  color: #999;
+  text-decoration: none;
 }
 
 footer a:hover,
 footer a:focus {
-    color: #aaa;
-    text-decoration: none;
-    border-bottom: 1px dotted #999;
+  color: #aaa;
+  text-decoration: none;
+  border-bottom: 1px dotted #999;
 }
 
 footer .form-control {
-    background-color: #1f2022;
-    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
-    border: none;
-    resize: none;
-    color: #d1d2d2;
-    padding: 0.7em 1em;
+  background-color: #1f2022;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  border: none;
+  resize: none;
+  color: #d1d2d2;
+  padding: 0.7em 1em;
 }
 
 body {
-    background-image: url('design10.png');
-    background-repeat: no-repeat;
-    background-size: 60%;
+  background-image: url('design10.png');
+  background-repeat: no-repeat;
+  background-size: 60%;
+}
+
+#heart {
+  animation-name: heartbeat;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  color: red;
+  padding: 0 5px;
+}
+
+.fa,
+.fas {
+  font-weight: 900;
+}
+
+.fa,
+.far,
+.fas {
+  font-family: "Font Awesome 5 Free";
+}
+
+.fa,
+.fab,
+.fal,
+.far,
+.fas {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+user agent stylesheet i {
+  font-style: italic;
+}
+
+.footer {
+  padding: 20px;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: roboto, Sans-serif;
+  color: grey;
+  background-color: #000;
+}
+
+@media only screen and (max-width: 799px) {
+  .footer {
+    height: 100%;
+    font-size: 1.2em;
+  }
+
+  user agent stylesheet html {
+    color: -internal-root-color;
+  }
+
 }

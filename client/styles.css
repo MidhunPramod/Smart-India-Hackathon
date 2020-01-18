@@ -74,3 +74,9 @@ footer .form-control {
     color: #d1d2d2;
     padding: 0.7em 1em;
 }
+
+body {
+    background-image: url('design10.png');
+    background-repeat: no-repeat;
+    background-size: 60%;
+}
